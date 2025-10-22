@@ -1,9 +1,42 @@
+import { useEffect, useState } from "react";
+import { Container } from "react-bootstrap";
+import TablaCategorias from "../components/categorias/TablaCategorias";
 
-const Categoria = () => {
+const Categorias = () => {
+    const [categorias, setCategorias] = useState([]);
+    const [cargando, setCargando] = useState(true);
+
+    const obtenerCategorias = async () => {
+        try {
+            const respuesta = await fetch("http://localhost:3001/api/categorias");
+
+            if (!respuesta.ok) {
+                throw new Error("Error al obtener las categorías");
+            }
+            const datos = await respuesta.json();
+
+            setCategorias(datos);
+            setCargando(false);
+        } catch (error) {
+            console.log(error.message);
+            setCargando(false);
+        }
+    }
+
+    useEffect(() => {
+        obtenerCategorias();
+    }, []);
+
     return (
         <>
-            <h2>Página de Categoria</h2>
+            <Container className="mt-4">
+                <h4>Categorias</h4>
+                <TablaCategorias
+                    categorias={categorias}
+                    cargando={cargando} />
+            </Container>
         </>
     );
 }
-export default Categoria;
+
+export default Categorias;

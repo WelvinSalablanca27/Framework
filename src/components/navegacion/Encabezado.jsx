@@ -42,57 +42,56 @@ const Encabezado = () => {
           </Offcanvas.Header>
           <Offcanvas.Body>
             <Nav className="flex-grow-1 pe-3">
-
               <Nav.Link
-                ClasssName={mostrarMenu ? "text-danger" : "text white"}
+                className={mostrarMenu ? "text-danger" : "text-white"}
                 onClick={() => manejarNavegacion("/")}
-                >
-                   {mostrarMenu ? <i className="bi-house-fill me-2" ></i>: null } Inicio
+              >
+                {mostrarMenu ? <i className="bi-house-fill me-2"></i> : null} Inicio
               </Nav.Link>
 
               <Nav.Link
-                ClasssName="text danger"
+                className="text danger"
                 onClick={() => manejarNavegacion("/categorias")}
               >
-                {mostrarMenu ? <i className="bi-bookmark-fill me-2" ></i>: null }Categorías
+                {mostrarMenu ? <i className="bi-bookmark-fill me-2" ></i> : null}Categorías
               </Nav.Link>
 
               <Nav.Link
-                ClasssName="text danger"
+                className="text danger"
                 onClick={() => manejarNavegacion("/producto")}
-              > 
-                   {mostrarMenu ? <i className="bi-box-fill me-2" ></i>: null } Producto
+              >
+                {mostrarMenu ? <i className="bi-box-fill me-2" ></i> : null} Producto
               </Nav.Link>
 
               <Nav.Link
-                ClasssName="text danger"
+                className="text danger"
                 onClick={() => manejarNavegacion("/cliente")}
               >
-               {mostrarMenu ? <i className="bi-person-fill me-2" ></i>: null } Cliente
+                {mostrarMenu ? <i className="bi-person-fill me-2" ></i> : null} Cliente
               </Nav.Link>
 
               <Nav.Link
-                ClasssName="text danger"
+                className="text danger"
                 onClick={() => manejarNavegacion("/empleados")}
-              > 
-              {mostrarMenu ? <i className="bi-people-fill me-2" ></i>: null } Empleados
+              >
+                {mostrarMenu ? <i className="bi-people-fill me-2" ></i> : null} Empleados
               </Nav.Link>
 
               <Nav.Link
-                ClasssName="text danger"
+                className="text danger"
                 onClick={() => manejarNavegacion("/usuarios")}
-              > 
-              {mostrarMenu ? <i className="bi-person-badge-fill me-2"></i> : null} Usuarios 
+              >
+                {mostrarMenu ? <i className="bi-person-badge-fill me-2"></i> : null} Usuarios
               </Nav.Link>
 
               <Nav.Link
-                ClasssName="text danger"
+                className="text danger"
                 onClick={() => manejarNavegacion("/ventas")}
               >
                 {mostrarMenu ? <i className="bi-cart-fill me-2"></i> : null} Ventas
               </Nav.Link>
               <Nav.Link
-                ClasssName="text danger"
+                className="text danger"
                 onClick={() => manejarNavegacion("/catalogo")}
               >
                 {mostrarMenu ? <i className="bi-book-fill me-2"></i> : null} Catálogo
