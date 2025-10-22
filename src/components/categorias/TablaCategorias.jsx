@@ -24,16 +24,16 @@ const TablaCategorias = ({ categorias, cargado }) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {categorias.map((categoria) => (
+                    {categorias.map((categoria) => {
+                        return(
                         <tr key={categoria.id_categoria}>
                             <td>{categoria.id_categoria}</td>
                             <td>{categoria.nombre_categoria}</td>
                             <td>{categoria.descripcion_categoria}</td>
                             <td>Acción</td>
                         </tr>
-                    ))}
-
-
+                        );
+                     })}
                 </tbody>
             </Table >
         </>
