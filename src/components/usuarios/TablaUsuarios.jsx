@@ -1,6 +1,6 @@
 import { Table, Spinner } from "react-bootstrap";
 
-const TablaCategorias = ({ categorias, cargando }) => {
+const TablaUsuarios = ({ usuarios, cargando }) => {
 
     if (cargando)
         return (
@@ -18,18 +18,18 @@ const TablaCategorias = ({ categorias, cargando }) => {
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>Nombre categoria </th>
-                        <th>Descripcion</th>
+                        <th>Usuario </th>
+                        <th>Contraseña</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {categorias.map((categoria) => {
+                    {usuarios.map((usuario) => {
                         return(
-                        <tr key={categoria.id_categoria}>
-                            <td>{categoria.id_categoria}</td>
-                            <td>{categoria.nombre_categoria}</td>
-                            <td>{categoria.descripcion_categoria}</td>
+                        <tr key={usuario.id_usuario}>
+                            <td>{usuario.id_usuario}</td>
+                            <td>{usuario.usuario}</td>
+                            <td>{usuario.contraseña}</td>
                             <td>Acción</td>
                         </tr>
                         );
@@ -39,4 +39,4 @@ const TablaCategorias = ({ categorias, cargando }) => {
         </>
     );
 }
-export default TablaCategorias;
+export default TablaUsuarios;
