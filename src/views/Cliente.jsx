@@ -30,7 +30,7 @@ const cliente = () => {
     return (
         <>
             <Container className="mt-4">
-                <h4>clientes</h4>
+                <h4>Clientes</h4>
                 <TablaClientes
                     clientes={clientes}
                     cargando={cargando} />

@@ -5,6 +5,7 @@ import Login from "./views/Login";
 import Inicio from "./views/Inicio";
 import Usuario from "./views/Usuario";
 import Cliente from "./views/Cliente";
+import Compra from "./views/Compra";
 import Ventas from "./views/Ventas";
 import Empleados from "./views/Empleados";
 import Categorias from "./views/Categorias";
@@ -14,7 +15,7 @@ import Catalogo from "./views/Catalogo";
 //Importar archivo de estilos.
 import "./App.css";
 
-const App = () =>{
+const App = () => {
   return (
     <Router>
       <Encabezado />a
@@ -24,6 +25,7 @@ const App = () =>{
           <Route path="/login" element={<Login />} />
           <Route path="/usuarios" element={<Usuario />} />
           <Route path="/clientes" element={<Cliente />} />
+          <Route path="/compras" element={<Compra />} />
           <Route path="/ventas" element={<Ventas />} />
           <Route path="/empleados" element={<Empleados />} />
           <Route path="/categorias" element={<Categorias />} />
