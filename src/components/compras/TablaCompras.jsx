@@ -16,9 +16,9 @@ const TablaCompras = ({ compras, cargando }) => {
                 <thead>
                     <tr>
                         <th>ID</th>
-                        <th>id_empleado </th>
-                        <th>fecha_compra</th>
-                        <th>total_compra</th>
+                        <th>id Empleado </th>
+                        <th>fecha Compra</th>
+                        <th>total Compra</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
