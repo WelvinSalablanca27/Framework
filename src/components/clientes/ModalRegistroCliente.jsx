@@ -1,6 +1,6 @@
 import { Modal, Form, Button } from "react-bootstrap";
 
-const ModalRegistroProducto = ({
+const ModalRegistroCliente = ({
   mostrarModal,
   setMostrarModal,
   nuevoCliente,

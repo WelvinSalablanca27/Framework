@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-import { Container } from "react-bootstrap";
+import { Container, Col, Row, Button } from 'react-bootstrap';
 import TablaCompras from "../components/compras/TablaCompras";
 import CuadroBusquedas from "../components/busquedas/CuadroBusquedas";
 import ModalRegistroCompra from '../components/compras/ModalRegistroCompra';
 
-const compras = () => {
+const Compra = () => {
     const [compras, setCompras] = useState([]);
     const [cargando, setCargando] = useState(true);
 
-    const [comprasFiltrados, setComprasFiltrados] = useState([]);
+    const [compraFiltrados, setCompraFiltrados] = useState([]);
     const [textoBusqueda, setTextoBusqueda] = useState("");
 
     const [mostrarModal, setMostrarModal] = useState(false);
@@ -16,7 +16,7 @@ const compras = () => {
         id_empleado: '',
         fecha_compra: '',
         total_compra: ''
- });
+    });
 
     const manejarCambioInput = (e) => {
         const { name, value } = e.target;
@@ -24,28 +24,25 @@ const compras = () => {
     };
 
     const agregarCompra = async () => {
-        if (!nuevoProducto.nombre_producto.trim()) return;
+        if (!nuevaCompra.id_empleado.trim()) return;
 
         try {
             const respuesta = await fetch('http://localhost:3001/api/registrarCompra', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(nuevoProducto)
+                body: JSON.stringify(nuevaCompra)
             });
 
             if (!respuesta.ok) throw new Error('Error al guardar');
 
             // Limpiar y cerrar
-            setNuevoProducto({
-                nombre_producto: '',
-                descripcion_producto: '',
-                id_categoria: '',
-                precio_unitario: '',
-                stock: '',
-                imagen: ''
+            setNuevaCompra({
+                id_empleado: '',
+                fecha_compra: '',
+                total_compra: ''
             });
             setMostrarModal(false);
-            await obtenerProductos(); // Refresca la lista
+            await obtenerCompras(); // Refresca la lista
         } catch (error) {
             console.error("Error al agregar Producto:", error);
             alert("No se pudo guardar la Producto. Revisa la consola.");
@@ -63,7 +60,7 @@ const compras = () => {
             const datos = await respuesta.json();
 
             setCompras(datos);
-            setComprasFiltrados(datos);
+            setCompraFiltrados(datos);
             setCargando(false);
         } catch (error) {
             console.log(error.message);
@@ -82,7 +79,7 @@ const compras = () => {
                 compras.fecha_compra.toString().includes(texto)
 
         );
-        setComprasFiltrados(filtrados);
+        setCompraFiltrados(filtrados);
     };
 
     useEffect(() => {
@@ -110,14 +107,14 @@ const compras = () => {
                 </Row>
 
                 <TablaCompras
-                    compras={comprasFiltrados}
+                    compras={compraFiltrados}
                     cargando={cargando} />
 
-                    
-                <ModalRegistroProducto
+
+                <ModalRegistroCompra
                     mostrarModal={mostrarModal}
-                    setMostrarModal={nuevaCompra}
-                    nuevaCompra={nuevoProducto}
+                    setMostrarModal={setMostrarModal}
+                    nuevaCompra={nuevaCompra}
                     manejarCambioInput={manejarCambioInput}
                     agregarCompra={agregarCompra}
                 />
@@ -126,4 +123,4 @@ const compras = () => {
     );
 }
 
-export default compras;
+export default Compra;

@@ -5,6 +5,7 @@ import CuadroBusquedas from "../components/busquedas/CuadroBusquedas";
 import ModalRegistroCategoria from '../components/categorias/ModalRegistroCategoria';
 
 const Categorias = () => {
+    
     const [categorias, setCategorias] = useState([]);
     const [cargando, setCargando] = useState(true);
 

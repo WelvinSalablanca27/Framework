@@ -88,7 +88,7 @@ const Encabezado = () => {
                 className="text danger"
                 onClick={() => manejarNavegacion("/compras")}
               >
-                {mostrarMenu ? <i className="bi-bag-fill me-2"></i> : null} Compras
+                {mostrarMenu ? <i className="bi-bag-fill me-2"></i> : null} Compra
               </Nav.Link>
 
 
