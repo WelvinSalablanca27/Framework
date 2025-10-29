@@ -3,6 +3,20 @@
     padding: 20px;
 }
 
- .texto-marca {
+.texto-marca {
     color: rgb(115, 0, 255);
- }
+}
+
+.texto-marca {
+    color: rgb(255, 0, 110);
+}
+
+.color-boton-registro {
+    background-color: rgb(36, 204, 255);
+    border-color:  rgb(22, 201, 255);
+}
+
+.color-boton-registro:hover {
+   background-color: rgb(36, 204, 255);
+    border-color:  rgb(22, 201, 255);
+}
