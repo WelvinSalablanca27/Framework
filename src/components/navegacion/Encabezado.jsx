@@ -81,7 +81,7 @@ const Encabezado = () => {
                 className="text danger"
                 onClick={() => manejarNavegacion("/usuarios")}
               >
-                {mostrarMenu ? <i className="bi-person-badge-fill me-2"></i> : null} Usuarios
+                {mostrarMenu ? <i className="bi-person-badge-fill me-2"></i> : null} Usuario
               </Nav.Link>
 
               <Nav.Link
