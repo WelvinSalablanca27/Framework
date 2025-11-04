@@ -9,8 +9,7 @@ const ModalRegistroCliente = ({
 }) => {
   return (
     <Modal  backdrop = "static" show={mostrarModal} onHide={() => setMostrarModal(false)} centered>
-      
-      
+  
       <Modal.Header closeButton>
         <Modal.Title>Agregar Nuevo Cliente</Modal.Title>
       </Modal.Header>

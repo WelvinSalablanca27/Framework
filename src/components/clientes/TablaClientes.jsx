@@ -1,8 +1,29 @@
-import { Table, Spinner } from "react-bootstrap";
+import { useState } from "react";
+import { Table, Spinner, Button } from "react-bootstrap";
+import BotonOrden from "../ordenamiento/BotonOrden";
 
-const TablaClientes = ({ clientes, cargado }) => {
+const TablaClientes = ({ clientes, cargando, abrirModalEdicion, abrirModalEliminacion }) => {
+    const [orden, setOrden] = useState({ campo: "id_cliente", direccion: "asc" });
+    const manejarOrden = (campo) => {
+        setOrden((prev) => ({
+            campo,
+            direccion: prev.campo === campo && prev.direccion === "asc" ? "desc" : "asc",
+        }));
+    };
 
-    if (cargado)
+
+    const clientesOrdenadas = [...clientes].sort((a, b) => {
+        const valorA = a[orden.campo];
+        const valorB = b[orden.campo];
+
+        if (typeof valorA === "number" && typeof valorB === "number") {
+            return orden.direccion === "asc" ? valorA - valorB : valorB - valorA;
+        }
+
+        const comparacion = String(valorA).localeCompare(String(valorB));
+        return orden.direccion === "asc" ? comparacion : -comparacion;
+    });
+    if (cargando)
         return (
             <>
 
@@ -17,19 +38,44 @@ const TablaClientes = ({ clientes, cargado }) => {
             <Table striped bordered hover>
                 <thead>
                     <tr>
-                        <th>ID</th>
-                        <th>primer_nombre </th>
-                        <th>segundo_nombre</th>
-                        <th>primer_apellido</th>
-                        <th>segundo_apellido</th>
-                        <th>celular</th>
-                        <th>direccion</th>
-                        <th>cedula</th>
+                        <BotonOrden campo="id_cliente" orden={orden} manejarOrden={manejarOrden}>
+                            ID
+                        </BotonOrden>
+
+                        <BotonOrden campo="primer_nombre" orden={orden} manejarOrden={manejarOrden}>
+                            Primer Nombre
+                        </BotonOrden>
+
+                        <BotonOrden campo="segundo_nombre" orden={orden} manejarOrden={manejarOrden}>
+                            Segundo Nombre
+                        </BotonOrden>
+
+                        <BotonOrden campo="primer_apellido" orden={orden} manejarOrden={manejarOrden}>
+                            Primer Apellido
+                        </BotonOrden>
+
+                        <BotonOrden campo="segundo_apellido" orden={orden} manejarOrden={manejarOrden}>
+                            Segundo Apellido
+                        </BotonOrden>
+
+                        <BotonOrden campo="celular" orden={orden} manejarOrden={manejarOrden}>
+                            Celular
+                        </BotonOrden>
+
+                        <BotonOrden campo="direccion" orden={orden} manejarOrden={manejarOrden}>
+                            Dirección
+                        </BotonOrden>
+
+
+                        <BotonOrden campo="cedula" orden={orden} manejarOrden={manejarOrden}>
+                            Cedula
+                        </BotonOrden>
+
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
-                    {clientes.map((cliente) => {
+                    {clientesOrdenadas.map((cliente) => {
                         return (
                             <tr key={cliente.id_cliente}>
                                 <td>{cliente.id_cliente}</td>
@@ -40,7 +86,26 @@ const TablaClientes = ({ clientes, cargado }) => {
                                 <td>{cliente.celular}</td>
                                 <td>{cliente.direccion}</td>
                                 <td>{cliente.cedula}</td>
-                                <td>Acción</td>
+                                <td>
+                                    <td>
+                                        <Button
+                                            variant="outline-warning"
+                                            size="sm"
+                                            className="me-2"
+                                            onClick={() => abrirModalEdicion(categoria)}
+                                        >
+                                            <i className="bi bi-pencil"></i>
+                                        </Button>
+                                        <Button
+                                            variant="outline-danger"
+                                            size="sm"
+                                            onClick={() => abrirModalEliminacion(categoria)}
+                                        >
+                                            <i className="bi bi-trash"></i>
+                                        </Button>
+                                    </td>
+
+                                </td>
                             </tr>
                         );
                     })}
