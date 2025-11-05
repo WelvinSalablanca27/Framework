@@ -1,6 +1,6 @@
 import { Modal, Button } from "react-bootstrap";
 
-const ModalEliminacionEmpleado = ({
+const ModalEliminacionEmpleados = ({
     mostrar,
     setMostrar,
     Empleado,
@@ -32,4 +32,4 @@ const ModalEliminacionEmpleado = ({
     );
 };
 
-export default ModalEliminacionEmpleado;
+export default ModalEliminacionEmpleados;

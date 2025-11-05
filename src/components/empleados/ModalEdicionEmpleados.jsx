@@ -1,6 +1,6 @@
 import { Modal, Form, Button } from "react-bootstrap";
 
-const ModalEdicionCliente = ({
+const ModalEdicionEmpleados = ({
     mostrar,
     setMostrar,
     empleadoEditada,
@@ -129,4 +129,4 @@ const ModalEdicionCliente = ({
     );
 };
 
-export default ModalEdicionCliente;
+export default ModalEdicionEmpleados;
