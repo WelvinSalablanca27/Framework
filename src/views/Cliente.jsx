@@ -1,8 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from "react";
 import { Container, Col, Row, Button } from 'react-bootstrap';
 import CuadroBusquedas from "../components/busquedas/CuadroBusquedas";
 import TablaClientes from '../components/clientes/TablaClientes';
 import ModalRegistroCliente from '../components/clientes/ModalRegistroCliente';
+import ModalEdicionCliente from '../components/clientes/ModalEdicionCliente';
+import ModalEliminacionCliente from '../components/clientes/ModalEliminacionCliente';
+
 
 const Cliente = () => {
     const [clientes, setClientes] = useState([]);
@@ -22,6 +25,53 @@ const Cliente = () => {
         cedula: ""
     });
 
+    const [mostrarModalEdicion, setMostrarModalEdicion] = useState(false);
+    const [mostrarModalEliminar, setMostrarModalEliminar] = useState(false);
+
+    const [clienteEditada, setClienteEditada] = useState(null);
+    const [clienteAEliminar, setClienteAEliminar] = useState(null);
+
+    const abrirModalEdicion = (clientes) => {
+        setClienteEditada({ ...clientes });
+        setMostrarModalEdicion(true);
+    };
+
+    const guardarEdicion = async () => {
+        if (!clienteEditada.primer_nombre.trim()) return;
+        try {
+            const respuesta = await fetch(`http://localhost:3001/api/actualizarCliente/${clienteEditada.id_cliente}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(clienteEditada)
+            });
+            if (!respuesta.ok) throw new Error('Error al actualizar');
+            setMostrarModalEdicion(false);
+            await obtenerClientes();
+        } catch (error) {
+            console.error("Error al editar clientes:", error);
+            alert("No se pudo actualizar la clientes.");
+        }
+    };
+
+    const abrirModalEliminacion = (clientes) => {
+        setClienteAEliminar(clientes);
+        setMostrarModalEliminar(true);
+    };
+
+    const confirmarEliminacion = async () => {
+        try {
+            const respuesta = await fetch(`http://localhost:3001/api/eliminarCliente/${clienteAEliminar.id_cliente}`, {
+                method: 'DELETE',
+            });
+            if (!respuesta.ok) throw new Error('Error al eliminar');
+            setMostrarModalEliminar(false);
+            setClienteAEliminar(null);
+            await obtenerClientes();
+        } catch (error) {
+            console.error("Error al eliminar cliente:", error);
+            alert("No se pudo eliminar la cliente.");
+        }
+    };
     const manejarCambioInput = (e) => {
         const { name, value } = e.target;
         setNuevoCliente((prev) => ({ ...prev, [name]: value }));
@@ -114,9 +164,11 @@ const Cliente = () => {
 
                 </Row>
                 <TablaClientes
-                 clientes={clientesFiltrados}
-                 cargando={cargando} 
-                 />
+                    clientes={clientesFiltrados}
+                    cargando={cargando}
+                    abrirModalEdicion={abrirModalEdicion}
+                    abrirModalEliminacion={abrirModalEliminacion}
+                />
 
                 <ModalRegistroCliente
                     mostrarModal={mostrarModal}
@@ -125,6 +177,22 @@ const Cliente = () => {
                     manejarCambioInput={manejarCambioInput}
                     agregarCliente={agregarCliente}
                 />
+
+                <ModalEdicionCliente
+                    mostrar={mostrarModalEdicion}
+                    setMostrar={setMostrarModalEdicion}
+                    clienteEditada={clienteEditada}
+                    setClienteEditada={setClienteEditada}
+                    guardarEdicion={guardarEdicion}
+                />
+
+                <ModalEliminacionCliente
+                    mostrar={mostrarModalEliminar}
+                    setMostrar={setMostrarModalEliminar}
+                    cliente={clienteAEliminar}
+                    confirmarEliminacion={confirmarEliminacion}
+                />
+
             </Container>
         </>
     );

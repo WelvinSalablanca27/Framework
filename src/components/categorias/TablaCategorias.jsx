@@ -73,7 +73,6 @@ const TablaCategorias = ({ categorias, cargando, abrirModalEdicion, abrirModalEl
                                     <i className="bi bi-trash"></i>
                                 </Button>
                             </td>
-
                         </td>
                     </tr>
                 ))}

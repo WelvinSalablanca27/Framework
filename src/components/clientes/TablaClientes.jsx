@@ -75,43 +75,40 @@ const TablaClientes = ({ clientes, cargando, abrirModalEdicion, abrirModalElimin
                     </tr>
                 </thead>
                 <tbody>
-                    {clientesOrdenadas.map((cliente) => {
-                        return (
-                            <tr key={cliente.id_cliente}>
-                                <td>{cliente.id_cliente}</td>
-                                <td>{cliente.primer_nombre}</td>
-                                <td>{cliente.segundo_nombre}</td>
-                                <td>{cliente.primer_apellido}</td>
-                                <td>{cliente.segundo_apellido}</td>
-                                <td>{cliente.celular}</td>
-                                <td>{cliente.direccion}</td>
-                                <td>{cliente.cedula}</td>
+                    {clientesOrdenadas.map((cliente) => (
+                        <tr key={cliente.id_cliente}>
+                            <td>{cliente.id_cliente}</td>
+                            <td>{cliente.primer_nombre}</td>
+                            <td>{cliente.segundo_nombre}</td>
+                            <td>{cliente.primer_apellido}</td>
+                            <td>{cliente.segundo_apellido}</td>
+                            <td>{cliente.celular}</td>
+                            <td>{cliente.direccion}</td>
+                            <td>{cliente.cedula}</td>
+                            <td>
                                 <td>
-                                    <td>
-                                        <Button
-                                            variant="outline-warning"
-                                            size="sm"
-                                            className="me-2"
-                                            onClick={() => abrirModalEdicion(categoria)}
-                                        >
-                                            <i className="bi bi-pencil"></i>
-                                        </Button>
-                                        <Button
-                                            variant="outline-danger"
-                                            size="sm"
-                                            onClick={() => abrirModalEliminacion(categoria)}
-                                        >
-                                            <i className="bi bi-trash"></i>
-                                        </Button>
-                                    </td>
-
+                                    <Button
+                                        variant="outline-warning"
+                                        size="sm"
+                                        className="me-2"
+                                        onClick={() => abrirModalEdicion(cliente)}
+                                    >
+                                        <i className="bi bi-pencil"></i>
+                                    </Button>
+                                    <Button
+                                        variant="outline-danger"
+                                        size="sm"
+                                        onClick={() => abrirModalEliminacion(cliente)}
+                                    >
+                                        <i className="bi bi-trash"></i>
+                                    </Button>
                                 </td>
-                            </tr>
-                        );
-                    })}
+                            </td>
+                        </tr>
+                    ))}
                 </tbody>
             </Table >
         </>
     );
-}
+};
 export default TablaClientes;
