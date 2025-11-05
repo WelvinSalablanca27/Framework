@@ -22,27 +22,43 @@ const Compra = () => {
         const { name, value } = e.target;
         setNuevaCompra(prev => ({ ...prev, [name]: value }));
     };
-
     const agregarCompra = async () => {
-        if (!nuevaCompra.id_empleado.trim()) return;
+        // Validaciones antes del envío
+        if (!nuevaCompra.id_empleado.trim() || !nuevaCompra.fecha_compra || !nuevaCompra.total_compra) {
+            console.warn("❗ Faltan campos obligatorios en el formulario.");
+            return;
+        }
+
+        // Validar que el empleado sea un número
+        if (isNaN(nuevaCompra.id_empleado)) {
+            console.warn("❗ El ID del empleado debe ser un número válido.");
+            return;
+        }
+
+        const datosCompra = {
+            id_empleado: parseInt(nuevaCompra.id_empleado),
+            fecha_compra: nuevaCompra.fecha_compra,
+            total_compra: parseFloat(nuevaCompra.total_compra),
+        };
 
         try {
-            const respuesta = await fetch('http://localhost:3001/api/registrarCompra', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(nuevaCompra)
+            const respuesta = await fetch("http://localhost:3001/api/registrarCompra", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(datosCompra),
             });
 
-            if (!respuesta.ok) throw new Error('Error al guardar');
+            const data = await respuesta.json();
 
-            // Limpiar y cerrar
-            setNuevaCompra({
-                id_empleado: '',
-                fecha_compra: '',
-                total_compra: ''
-            });
+            if (!respuesta.ok) {
+                console.error("Error del servidor:", data);
+                return;
+            }
+
+            // ✅ Sin alert: cerrar modal, limpiar y refrescar lista
             setMostrarModal(false);
-            await obtenerCompras(); // Refresca la lista
+            setNuevaCompra({ id_empleado: "", fecha_compra: "", total_compra: "" });
+            obtenerCompras(); // Refresca la lista
         } catch (error) {
             console.error("Error al agregar Producto:", error);
             alert("No se pudo guardar la Producto. Revisa la consola.");
