@@ -3,6 +3,8 @@ import { Container, Col, Row, Button } from 'react-bootstrap';
 import TablaCompras from "../components/compras/TablaCompras";
 import CuadroBusquedas from "../components/busquedas/CuadroBusquedas";
 import ModalRegistroCompra from '../components/compras/ModalRegistroCompra';
+import ModalEdicionCompra from '../components/compras/ModalEdicionCompra';
+
 
 const Compra = () => {
     const [compras, setCompras] = useState([]);
@@ -17,6 +19,54 @@ const Compra = () => {
         fecha_compra: '',
         total_compra: ''
     });
+
+    const [mostrarModalEdicion, setMostrarModalEdicion] = useState(false);
+    const [mostrarModalEliminar, setMostrarModalEliminar] = useState(false);
+
+    const [compraEditada, setCompraEditada] = useState(null);
+    const [compraAEliminar, setCompraAEliminar] = useState(null);
+
+    const abrirModalEdicion = (Compras) => {
+        setCompraEditada({ ...Compras });
+        setMostrarModalEdicion(true);
+    };
+
+    const guardarEdicion = async () => {
+        if (!compraEditada.id_empleado.trim()) return;
+        try {
+            const respuesta = await fetch(`http://localhost:3001/api/actualizarCompra/${compraEditada.id_compra}`, {
+                method: 'PATCH',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(compraEditada)
+            });
+            if (!respuesta.ok) throw new Error('Error al actualizar');
+            setMostrarModalEdicion(false);
+            await obtenerCompras();
+        } catch (error) {
+            console.error("Error al editar Compras:", error);
+            alert("No se pudo actualizar la Compras.");
+        }
+    };
+
+    const abrirModalEliminacion = (clientes) => {
+        setCompraAEliminar(clientes);
+        setMostrarModalEliminar(true);
+    };
+
+    const confirmarEliminacion = async () => {
+        try {
+            const respuesta = await fetch(`http://localhost:3001/api/eliminarCompra/${compraAEliminar.id_compra}`, {
+                method: 'DELETE',
+            });
+            if (!respuesta.ok) throw new Error('Error al eliminar');
+            setMostrarModalEliminar(false);
+            setCompraAEliminar(null);
+            await obtenerCompras();
+        } catch (error) {
+            console.error("Error al eliminar Compra:", error);
+            alert("No se pudo eliminar la Compra.");
+        }
+    };
 
     const manejarCambioInput = (e) => {
         const { name, value } = e.target;
@@ -124,7 +174,10 @@ const Compra = () => {
 
                 <TablaCompras
                     compras={compraFiltrados}
-                    cargando={cargando} />
+                    cargando={cargando}
+                    abrirModalEdicion={abrirModalEdicion}
+                    abrirModalEliminacion={abrirModalEliminacion}
+                />
 
 
                 <ModalRegistroCompra
@@ -133,6 +186,14 @@ const Compra = () => {
                     nuevaCompra={nuevaCompra}
                     manejarCambioInput={manejarCambioInput}
                     agregarCompra={agregarCompra}
+                />
+
+                <ModalEdicionCompra
+                    mostrar={mostrarModalEdicion}
+                    setMostrar={setMostrarModalEdicion}
+                    compraEditada={compraEditada}
+                    setCompraEditada={setCompraEditada}
+                    guardarEdicion={guardarEdicion}
                 />
             </Container>
         </>
