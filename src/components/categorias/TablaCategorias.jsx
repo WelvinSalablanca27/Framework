@@ -4,10 +4,10 @@ import BotonOrden from "../ordenamiento/BotonOrden";
 import Paginacion from "../ordenamiento/Paginacion";
 
 const TablaCategorias = ({ categorias, cargando, abrirModalEdicion, abrirModalEliminacion, totalElementos,
-elementosPorPagina,
-paginaActual,
-establecerPaginaActual
- }) => {
+    elementosPorPagina,
+    paginaActual,
+    establecerPaginaActual
+}) => {
     const [orden, setOrden] = useState({ campo: "id_categoria", direccion: "asc" });
 
     const manejarOrden = (campo) => {
@@ -40,31 +40,31 @@ establecerPaginaActual
 
     return (
         <>
-        
 
-        <Table striped bordered hover>
-            <thead>
-                <tr>
-                    <BotonOrden campo="id_categoria" orden={orden} manejarOrden={manejarOrden}>
-                        ID
-                    </BotonOrden>
-                    <BotonOrden campo="nombre_categoria" orden={orden} manejarOrden={manejarOrden}>
-                        Nombre Categoría
-                    </BotonOrden>
-                    <BotonOrden campo="descripcion_categoria" orden={orden} manejarOrden={manejarOrden}>
-                        Descripción Categoría
-                    </BotonOrden>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                {categoriasOrdenadas.map((categoria) => (
-                    <tr key={categoria.id_categoria}>
-                        <td>{categoria.id_categoria}</td>
-                        <td>{categoria.nombre_categoria}</td>
-                        <td>{categoria.descripcion_categoria}</td>
-                        <td>
+
+            <Table striped bordered hover>
+                <thead>
+                    <tr>
+                        <BotonOrden campo="id_categoria" orden={orden} manejarOrden={manejarOrden}>
+                            ID
+                        </BotonOrden>
+                        <BotonOrden campo="nombre_categoria" orden={orden} manejarOrden={manejarOrden}>
+                            Nombre Categoría
+                        </BotonOrden>
+                        <BotonOrden campo="descripcion_categoria" orden={orden} manejarOrden={manejarOrden}>
+                            Descripción Categoría
+                        </BotonOrden>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {categoriasOrdenadas.map((categoria) => (
+                        <tr key={categoria.id_categoria}>
+                            <td>{categoria.id_categoria}</td>
+                            <td>{categoria.nombre_categoria}</td>
+                            <td>{categoria.descripcion_categoria}</td>
                             <td>
+
                                 <Button
                                     variant="outline-warning"
                                     size="sm"
@@ -80,19 +80,20 @@ establecerPaginaActual
                                 >
                                     <i className="bi bi-trash"></i>
                                 </Button>
+
                             </td>
-                        </td>
-                    </tr>
-                ))}
-            </tbody>
-        </Table>
-       <Paginacion
-  elementosPorPagina={elementosPorPagina}
-  totalElementos={totalElementos}
-  paginaActual={paginaActual}
-  establecerPaginaActual={establecerPaginaActual}
-/>
- </>
+                        </tr>
+                    ))}
+                </tbody>
+            </Table>
+
+            <Paginacion
+                elementosPorPagina={elementosPorPagina}
+                totalElementos={totalElementos}
+                paginaActual={paginaActual}
+                establecerPaginaActual={establecerPaginaActual}
+            />
+        </>
     );
 };
 

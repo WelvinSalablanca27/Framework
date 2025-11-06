@@ -12,12 +12,18 @@ const ModalEdicionCompra = ({
         setCompraEditada((prev) => ({ ...prev, [name]: value }));
     };
 
-    return (
-        <Modal backdrop="static" show={mostrar} onHide={() => setMostrar(false)} centered>
 
+    return (
+        <Modal
+            backdrop="static"
+            show={mostrar}
+            onHide={() => setMostrar(false)}
+            centered
+        >
             <Modal.Header closeButton>
-                <Modal.Title>Agregar Nuevo Empleado</Modal.Title>
+                <Modal.Title>Editar Compra</Modal.Title>
             </Modal.Header>
+
             <Modal.Body>
                 <Form>
                     <Form.Group className="mb-3" controlId="id_empleado">
@@ -25,7 +31,7 @@ const ModalEdicionCompra = ({
                         <Form.Control
                             type="text"
                             name="id_empleado"
-                            value={compraEditada?.id_empleado}
+                            value={compraEditada?.id_empleado || ""}
                             onChange={manejarCambio}
                             placeholder="Ej: ID 1"
                             maxLength={20}
@@ -33,34 +39,35 @@ const ModalEdicionCompra = ({
                             autoFocus
                         />
                     </Form.Group>
+
                     <Form.Group className="mb-3" controlId="fecha_compra">
                         <Form.Label>Fecha Compra</Form.Label>
                         <Form.Control
                             type="text"
                             name="fecha_compra"
-                            value={compraEditada?.fecha_compra}
+                            value={compraEditada?.fecha_compra || ""}
                             onChange={manejarCambio}
-                            placeholder="Ej: dd/mm/aaa"
+                            placeholder="Ej: dd/mm/aaaa"
                             maxLength={20}
                             required
-                            autoFocus
                         />
                     </Form.Group>
+
                     <Form.Group className="mb-3" controlId="total_compra">
                         <Form.Label>Total Compra</Form.Label>
                         <Form.Control
                             type="text"
                             name="total_compra"
-                            value={compraEditada?.total_compra}
+                            value={compraEditada?.total_compra || ""}
                             onChange={manejarCambio}
-                            placeholder="Ej: Total"
+                            placeholder="Ej: 1000.00"
                             maxLength={20}
                             required
-                            autoFocus
                         />
                     </Form.Group>
                 </Form>
             </Modal.Body>
+
             <Modal.Footer>
                 <Button variant="secondary" onClick={() => setMostrar(false)}>
                     Cancelar
@@ -68,14 +75,15 @@ const ModalEdicionCompra = ({
                 <Button
                     variant="primary"
                     onClick={guardarEdicion}
-                    disabled={!compraEditada?.id_empleado.trim()}
+                    disabled={!compraEditada?.id_empleado?.toString().trim()}
                 >
                     Guardar Cambios
                 </Button>
             </Modal.Footer>
         </Modal>
     );
+
+
 };
 
 export default ModalEdicionCompra;
-
