@@ -20,6 +20,14 @@ const Compra = () => {
     total_compra: "",
   });
 
+  const [paginaActual, establecerPaginaActual] = useState(1);
+  const elementosPorPagina = 5; 
+
+  // Calcular compras paginadas
+  const comprasPaginadas = compraFiltrados.slice(
+    (paginaActual - 1) * elementosPorPagina,
+    paginaActual * elementosPorPagina
+  );
   const [mostrarModalEdicion, setMostrarModalEdicion] = useState(false);
   const [mostrarModalEliminar, setMostrarModalEliminar] = useState(false);
 
@@ -208,10 +216,15 @@ const Compra = () => {
       </Row>
 
       <TablaCompras
-        compras={compraFiltrados}
+        compras={comprasPaginadas}
         cargando={cargando}
         abrirModalEdicion={abrirModalEdicion}
         abrirModalEliminacion={abrirModalEliminacion}
+        totalElementos={compras.length} // Total de clientes
+        elementosPorPagina={elementosPorPagina} // Elementos por página
+        paginaActual={paginaActual} // Página actual
+        establecerPaginaActual={establecerPaginaActual} // Método para cambiar página
+
       />
 
       <ModalRegistroCompra
