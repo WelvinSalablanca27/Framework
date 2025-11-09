@@ -169,7 +169,7 @@ const Producto = () => {
         <div
           className="p-4 rounded-4 shadow-lg"
           style={{
-            backgroundColor: "rgba(255, 255, 255, 0.92)",
+            backgroundColor: "rgba(255, 255, 255, 0.67)",
             maxWidth: "900px",
             width: "100%",
             border: "3px solid #28a745",
