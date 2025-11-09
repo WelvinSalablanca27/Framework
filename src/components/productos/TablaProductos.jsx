@@ -1,10 +1,15 @@
-import { useEffect, useState } from "react";
-import { Table, Spinner } from "react-bootstrap";
+import { useState } from "react";
+import { Table, Spinner, Image, Button } from "react-bootstrap";
 import BotonOrden from "../ordenamiento/BotonOrden";
 
-const TablaProductos = ({ productos, cargando }) => {
+const TablaProductos = ({
+    productos,
+    cargando,
+    abrirModalEdicion,
+    abrirModalEliminacion,
+}) => {
+    const [orden, setOrden] = useState({ campo: "id_producto", direccion: "asc" });
 
-    const[orden, setOrden] = useState({ campo: "id_producto", direccion: "asc" });
     const manejarOrden = (campo) => {
         setOrden((prev) => ({
             campo,
@@ -12,7 +17,6 @@ const TablaProductos = ({ productos, cargando }) => {
                 prev.campo === campo && prev.direccion === "asc" ? "desc" : "asc",
         }));
     };
-
 
     const productoOrdenadas = [...productos].sort((a, b) => {
         const valorA = a[orden.campo];
@@ -26,70 +30,88 @@ const TablaProductos = ({ productos, cargando }) => {
         return orden.direccion === "asc" ? comparacion : -comparacion;
     });
 
-
     if (cargando)
         return (
-            <>
-
+            <div className="text-center my-3">
                 <Spinner animation="border" role="status">
                     <span className="visually-hidden">Cargando...</span>
                 </Spinner>
-
-            </>
-
+            </div>
         );
+
     return (
-        <>
-            <Table striped bordered hover>
-                <thead>
-                    <tr>
-                        <BotonOrden campo="id_producto" orden={orden} manejarOrden={manejarOrden}>
-                            ID
-                        </BotonOrden>
+        <Table striped bordered hover>
+            <thead>
+                <tr>
+                    <BotonOrden campo="id_producto" orden={orden} manejarOrden={manejarOrden}>
+                        ID
+                    </BotonOrden>
+                    <BotonOrden campo="nombre_producto" orden={orden} manejarOrden={manejarOrden}>
+                        Nombre Producto
+                    </BotonOrden>
+                    <BotonOrden campo="descripcion_producto" orden={orden} manejarOrden={manejarOrden}>
+                        Descripción
+                    </BotonOrden>
+                    <BotonOrden campo="id_categoria" orden={orden} manejarOrden={manejarOrden}>
+                        ID Categoria
+                    </BotonOrden>
+                    <BotonOrden campo="precio_unitario" orden={orden} manejarOrden={manejarOrden}>
+                        Precio
+                    </BotonOrden>
+                    <BotonOrden campo="stock" orden={orden} manejarOrden={manejarOrden}>
+                        Stock
+                    </BotonOrden>
+                    <th>Imagen</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {productoOrdenadas.map((producto) => (
+                    <tr key={producto.id_producto}>
+                        <td>{producto.id_producto}</td>
+                        <td>{producto.nombre_producto}</td>
+                        <td>{producto.descripcion_producto}</td>
+                        <td>{producto.id_categoria}</td>
+                        <td>{producto.precio_unitario}</td>
+                        <td>{producto.stock}</td>
+                        <td>
+                            {producto.imagen ? (
+                                <Image
+                                    src={producto.imagen}
+                                    thumbnail
+                                    style={{ width: "80px", height: "80px", objectFit: "cover" }}
+                                />
+                            ) : (
+                                "Sin imagen"
+                            )}
+                        </td>
+                        <td>
+                            
+                                <div className="d-grid gap-1 d-md-flex">
+                                    <Button
+                                        variant="warning"
+                                        size="sm"
+                                        className="w-100 w-md-auto"
+                                        onClick={() => abrirModalEdicion(producto)}
+                                    >
+                                        Editar
+                                    </Button>
+                                    <Button
+                                        variant="danger"
+                                        size="sm"
+                                        className="w-100 w-md-auto"
+                                        onClick={() => abrirModalEliminacion(producto)}
+                                    >
+                                        Eliminar
+                                    </Button>
+                                </div>
+                            </td>
 
-                        <BotonOrden campo="nombre_producto" orden={orden} manejarOrden={manejarOrden}>
-                            Nombre Producto
-                        </BotonOrden>
-
-                        <BotonOrden campo="descripcion_producto" orden={orden} manejarOrden={manejarOrden}>
-                            Descripción Producto
-                        </BotonOrden>
-                        <BotonOrden campo="id_categoria" orden={orden} manejarOrden={manejarOrden}>
-                            ID Categoria
-                        </BotonOrden>
-
-                        <BotonOrden campo="precio_unitario" orden={orden} manejarOrden={manejarOrden}>
-                            Precio Unitario
-                        </BotonOrden>
-
-                        <BotonOrden campo="stock" orden={orden} manejarOrden={manejarOrden}>
-                            Stock
-                        </BotonOrden>
-
-                        <BotonOrden campo="imagen" orden={orden} manejarOrden={manejarOrden}>
-                            Imagen
-                        </BotonOrden>
-                        <th>Acciones</th>
                     </tr>
-                </thead>
-                <tbody>
-                    {productoOrdenadas.map((producto) => {
-                        return (
-                            <tr key={producto.id_producto}>
-                                <td>{producto.id_producto}</td>
-                                <td>{producto.nombre_producto}</td>
-                                <td>{producto.descripcion_producto}</td>
-                                <td>{producto.id_categoria}</td>
-                                <td>{producto.precio_unitario}</td>
-                                <td>{producto.stock}</td>
-                                <td>{producto.imagen}</td>
-                                <td>Acción</td>
-                            </tr>
-                        );
-                    })}
-                </tbody>
-            </Table >
-        </>
+                ))}
+            </tbody>
+        </Table>
     );
-}
+};
+
 export default TablaProductos;

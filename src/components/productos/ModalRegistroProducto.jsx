@@ -4,9 +4,28 @@ const ModalRegistroProducto = ({
   mostrarModal,
   setMostrarModal,
   nuevoProducto,
-  manejarCambioInput,
+  setNuevoProducto,
   agregarProducto,
 }) => {
+  const manejarCambioInput = (e) => {
+    const { name, value } = e.target;
+    setNuevoProducto((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const manejarImagen = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setNuevoProducto((prev) => ({
+          ...prev,
+          imagen: reader.result, // Guardamos la imagen en Base64
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
   return (
     <Modal backdrop="static" show={mostrarModal} onHide={() => setMostrarModal(false)} centered>
       <Modal.Header closeButton>
@@ -23,7 +42,7 @@ const ModalRegistroProducto = ({
               value={nuevoProducto.nombre_producto}
               onChange={manejarCambioInput}
               placeholder="Ej: Cajas"
-              maxLength={50}
+              maxLength={20} // Según tu tabla
               required
             />
           </Form.Group>
@@ -31,12 +50,13 @@ const ModalRegistroProducto = ({
           <Form.Group className="mb-3" controlId="descripcion_producto">
             <Form.Label>Descripción del Producto</Form.Label>
             <Form.Control
-              type="text"
+              as="textarea"
+              rows={3}
               name="descripcion_producto"
               value={nuevoProducto.descripcion_producto}
               onChange={manejarCambioInput}
               placeholder="Ej: 4x4 chapa 14"
-              maxLength={100}
+              maxLength={100} // Según tu tabla
               required
             />
           </Form.Group>
@@ -57,6 +77,7 @@ const ModalRegistroProducto = ({
             <Form.Label>Precio Unitario</Form.Label>
             <Form.Control
               type="number"
+              step="0.01"
               name="precio_unitario"
               value={nuevoProducto.precio_unitario}
               onChange={manejarCambioInput}
@@ -79,16 +100,18 @@ const ModalRegistroProducto = ({
 
           <Form.Group className="mb-3" controlId="imagen">
             <Form.Label>Imagen del Producto</Form.Label>
-            <Form.Control
-              as="textarea"
-              rows={3}
-              name="imagen"
-              value={nuevoProducto.imagen}
-              onChange={manejarCambioInput}
-              placeholder="Ej: URL o descripción de imagen"
-              maxLength={150}
-            />
+            <Form.Control type="file" accept="image/*" onChange={manejarImagen} />
           </Form.Group>
+
+          {nuevoProducto.imagen && (
+            <div className="text-center mb-3">
+              <img
+                src={nuevoProducto.imagen}
+                alt="Vista previa"
+                style={{ width: "150px", borderRadius: "5px" }}
+              />
+            </div>
+          )}
         </Form>
       </Modal.Body>
 
