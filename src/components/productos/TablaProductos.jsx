@@ -79,12 +79,12 @@ const TablaProductos = ({
                                     <div
                                         style={{
                                             width: "100%",
-                                            maxWidth: "120px",
+                                            maxWidth: "70px",
                                             aspectRatio: "1 / 1",
                                             overflow: "hidden",
                                             borderRadius: "10px",
                                             margin: "0 auto",
-                                            backgroundColor: "#f8f9fa",
+                                            backgroundColor: "#d1d2d1ff",
                                             display: "flex",
                                             justifyContent: "center",
                                             alignItems: "center",
@@ -95,8 +95,8 @@ const TablaProductos = ({
                                             alt={producto.nombre_producto}
                                             fluid
                                             style={{
-                                                width: "1340%",
-                                                height: "110%",
+                                                width: "100%",
+                                                height: "100%",
                                                 objectFit: "contain", // 🔥 muestra toda la imagen sin recortar
                                                 borderRadius: "10px",
                                             }}
