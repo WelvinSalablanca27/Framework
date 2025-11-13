@@ -1,6 +1,6 @@
 import { Modal, Button } from "react-bootstrap";
 
-const ModalEliminacionCliente = ({
+const ModalEliminacionProducto = ({
     mostrar,
     setMostrar,
     producto,
@@ -32,4 +32,4 @@ const ModalEliminacionCliente = ({
     );
 };
 
-export default ModalEliminacionCliente;
+export default ModalEliminacionProducto;
